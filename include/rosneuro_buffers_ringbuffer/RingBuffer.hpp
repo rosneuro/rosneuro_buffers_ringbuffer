@@ -12,7 +12,6 @@ class RingBuffer : public Buffer<T> {
 		RingBuffer(void);
 		~RingBuffer(void) {};
 
-		bool set(unsigned int nrows, unsigned int ncols);
 
 		bool configure(void);
 		bool add(const DynamicMatrix<T>& in);
@@ -24,13 +23,6 @@ class RingBuffer : public Buffer<T> {
 template<typename T>
 RingBuffer<T>::RingBuffer(void) {}
 
-template<typename T>
-bool RingBuffer<T>::set(unsigned int nrows, unsigned int ncols) {
-	this->resize(nrows, ncols);
-	this->is_set_ = true;
-
-	return true;
-}
 
 template<typename T>
 bool RingBuffer<T>::configure(void) {
