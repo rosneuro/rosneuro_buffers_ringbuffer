@@ -1,6 +1,11 @@
 # ROS-Neuro RingBuffer package
 The package provides the implementation of a RingBuffer. The implemented data replacement policy is FIFO.
 
+## Usage
+The buffer can be configured by means of the set function (*bool Buffer\<T\>::set(unsigned int nrows, unsigned int ncols)*) or by yaml configuration and parameter server. The only mandatory parameter is the **size** of the buffer. In the case the buffer is used without being configured, it will throws a std::runtime exception.
+
+For usability, the internal resources of the buffer are set during the first call to the function *bool RingBuffer\<T\>::add(const DynamicMatrix\<T\>& in)*. This effectively reduces the performances during the first call, but it allows to deduce the number of channels at runtime.
+
 ## Example of RingBuffer (with YAML configuration)
 ```cpp
 #include <ros/ros.h>
