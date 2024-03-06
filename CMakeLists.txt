@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
 			 pluginlib
 			 rosneuro_buffers)
 
+find_package(GTest REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(PkgConfig)
 
@@ -37,13 +38,18 @@ catkin_package(
 
 include_directories(${catkin_INCLUDE_DIRS} 
                     ${EIGEN3_INCLUDE_DIRS}
-					include)
+					include
+					include/${PROJECT_NAME}/)
 
 add_definitions(${EIGEN3_DEFINITIONS})
 
 add_library(${PROJECT_NAME} src/RingBuffer.cpp)
-target_link_libraries(${PROJECT_NAME} ${Eigen3_LIBRARIES} 
-												 ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${Eigen3_LIBRARIES} ${catkin_LIBRARIES})
+
+catkin_add_gtest(test_ringbuffer_class test/test_ringbuffer_class.cpp)
+target_link_libraries(test_ringbuffer_class ${GTEST_BOTH_LIBRARIES} pthread gmock ${Eigen3_LIBRARIES})
+target_link_libraries(test_ringbuffer_class ${PROJECT_NAME} ${catkin_LIBRARIES})
+include_directories(${GTEST_INCLUDE_DIRS} gmock pthread)
 
 #################
 ## Executables ##

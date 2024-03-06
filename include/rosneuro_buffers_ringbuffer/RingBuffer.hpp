@@ -2,6 +2,7 @@
 #define ROSNEURO_RINGBUFFER_HPP
 
 #include <rosneuro_buffers/Buffer.hpp>
+#include <gtest/gtest_prod.h>
 
 namespace rosneuro {
 
@@ -18,6 +19,9 @@ class RingBuffer : public Buffer<T> {
 	
 	private:
 		unsigned int size_;
+        FRIEND_TEST(BufferRingTestSuite, ConfigureTest);
+        FRIEND_TEST(BufferRingTestSuite, AddTest);
+        FRIEND_TEST(BufferRingTestSuite, AddMismatchedColumnsTest);
 };
 
 template<typename T>
