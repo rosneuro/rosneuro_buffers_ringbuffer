@@ -1,4 +1,0 @@
-<launch>	
-	<rosparam command="load" file="$(find rosneuro_buffers_ringbuffer)/test/test_ringbuffer.yaml"/>
-	<node name="test_ringbuffer" pkg="rosneuro_buffers_ringbuffer" type="test_ringbuffer" output="screen"/>
-</launch>
