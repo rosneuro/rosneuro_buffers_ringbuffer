@@ -63,16 +63,11 @@ namespace rosneuro {
         int niter = 0;
         DynamicMatrix<double> frame, output;
 
-        try {
-            do {
-                frame = generate_frame<double>(frame_rows, frame_cols, niter);
-                ring_buffer->add(frame);
-                niter++;
-            } while (!ring_buffer->isfull());
-        } catch (std::runtime_error& e) {
-            FAIL();
-        }
-        SUCCEED();
+        do {
+            frame = generate_frame<double>(frame_rows, frame_cols, niter);
+            ASSERT_TRUE(ring_buffer->add(frame));
+            niter++;
+        } while (!ring_buffer->isfull());
     }
 }
 
