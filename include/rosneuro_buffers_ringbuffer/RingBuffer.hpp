@@ -13,8 +13,10 @@ namespace rosneuro {
             bool configure(void);
             bool add(const DynamicMatrix<T>& in);
 
-        private:
+        protected:
             unsigned int size_;
+
+        private:
             FRIEND_TEST(BufferRingTestSuite, ConfigureTest);
             FRIEND_TEST(BufferRingTestSuite, AddTest);
             FRIEND_TEST(BufferRingTestSuite, AddMismatchedColumnsTest);
