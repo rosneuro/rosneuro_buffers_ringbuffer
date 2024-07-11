@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
 			 pluginlib
 			 rosneuro_buffers)
 
+find_package(GTest REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(PkgConfig)
 
@@ -37,24 +38,34 @@ catkin_package(
 
 include_directories(${catkin_INCLUDE_DIRS} 
                     ${EIGEN3_INCLUDE_DIRS}
-					include)
+					include
+					include/${PROJECT_NAME}/)
 
 add_definitions(${EIGEN3_DEFINITIONS})
 
 add_library(${PROJECT_NAME} src/RingBuffer.cpp)
-target_link_libraries(${PROJECT_NAME} ${Eigen3_LIBRARIES} 
-												 ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${Eigen3_LIBRARIES} ${catkin_LIBRARIES})
+
+###########
+## Test  ##
+###########
+
+catkin_add_gtest(TestRingBuffer test/TestRingBuffer.cpp)
+target_link_libraries(TestRingBuffer ${GTEST_BOTH_LIBRARIES} pthread gmock ${Eigen3_LIBRARIES})
+target_link_libraries(TestRingBuffer ${PROJECT_NAME} ${catkin_LIBRARIES})
+include_directories(${GTEST_INCLUDE_DIRS} gmock pthread)
 
 #################
 ## Executables ##
 #################
 
-add_executable(test_ringbuffer test/test_ringbuffer.cpp)
+add_executable(test_ringbuffer example/RunRingBuffer.cpp)
 target_link_libraries(test_ringbuffer ${PROJECT_NAME} ${CATKIN_LIBRARIES})
 
 #################
 ##   Install   ##
 #################
+
 install(TARGETS ${PROJECT_NAME}
 	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 )
